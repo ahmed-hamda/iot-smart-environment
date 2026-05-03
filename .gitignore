@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+
+# Flutter
+build/
+.dart_tool/
+android/.gradle/
+
+# VSCode
+.vscode/
+
+# secrets
+.env
