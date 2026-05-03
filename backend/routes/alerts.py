@@ -6,10 +6,18 @@ alert_bp = Blueprint('alert', __name__)
 @alert_bp.route('/alerts', methods=['GET'])
 def get_alerts():
     try:
+        is_read = request.args.get("is_read")  # query param
+
+        query = supabase.table("alerts").select("*")
+
+        if is_read is not None:
+            if is_read.lower() == "true":
+                query = query.eq("is_read", True)
+            elif is_read.lower() == "false":
+                query = query.eq("is_read", False)
+
         response = (
-            supabase
-            .table("alerts")
-            .select("*")
+            query
             .order("created_at", desc=True)
             .execute()
         )

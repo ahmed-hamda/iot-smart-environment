@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401814859740",
+    "project_id": "iotsysenv-2b3f1",
+    "storage_bucket": "iotsysenv-2b3f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401814859740:android:9406bb8e41e7d2d5c8e919",
+        "android_client_info": {
+          "package_name": "com.example.front_endd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF-aKzaDRH4-eVa0MU-dcZc61IQUOn-rI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

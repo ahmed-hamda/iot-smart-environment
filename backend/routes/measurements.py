@@ -119,3 +119,32 @@ def get_measurements():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@measurement_bp.route('/measurements/by-period', methods=['GET'])
+def get_measurements_by_period():
+    try:
+        start_date = request.args.get("from")
+        end_date = request.args.get("to")
+
+        query = (
+            supabase
+            .table("measurements")
+            .select("*")
+            .order("created_at", desc=False)
+        )
+
+        if start_date:
+            query = query.gte("created_at", start_date)
+
+        if end_date:
+            query = query.lte("created_at", end_date)
+
+        response = query.execute()
+
+        return jsonify({
+            "message": "Measurements by period retrieved successfully",
+            "data": response.data
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
