@@ -1,0 +1,113 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <DHT.h>
+
+// ===== WIFI =====
+const char* ssid = "";
+const char* password = "";
+
+// ⚠️ Remplace par IP de ton PC
+const char* serverName = "http://192.168.1.11:5000/measurements";
+
+// ===== CAPTEURS =====
+#define DHTPIN 4
+#define DHTTYPE DHT11
+
+#define MQ2_PIN 34
+#define RAIN_PIN 35
+
+#define LED_PIN 2
+#define BUZZER_PIN 15
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+
+  dht.begin();
+
+  // ===== WIFI CONNECT =====
+  WiFi.begin(ssid, password);
+  Serial.print("Connexion WiFi");
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+
+  Serial.println("\n✅ Connecté au WiFi !");
+  Serial.print("IP ESP32 : ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+
+  // ===== Lecture capteurs =====
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  int gasValue = analogRead(MQ2_PIN);
+  int rainValue = analogRead(RAIN_PIN);
+
+  Serial.println("------");
+
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("❌ Erreur DHT !");
+    return;
+  }
+
+  Serial.print("Temp: "); Serial.println(temperature);
+  Serial.print("Hum: "); Serial.println(humidity);
+  Serial.print("Gas: "); Serial.println(gasValue);
+  Serial.print("Rain: "); Serial.println(rainValue);
+
+  // ===== LED blink =====
+  digitalWrite(LED_PIN, HIGH);
+  delay(300);
+  digitalWrite(LED_PIN, LOW);
+
+  // ===== Buzzer logique =====
+  if (gasValue > 1000) {
+    Serial.println("⚠️ GAZ DETECTE !");
+    digitalWrite(BUZZER_PIN, HIGH);
+  } 
+  else if (rainValue < 2000) {
+    Serial.println("🌧️ PLUIE DETECTEE !");
+    digitalWrite(BUZZER_PIN, HIGH);
+  } 
+  else {
+    digitalWrite(BUZZER_PIN, LOW);
+  }
+
+  // ===== Envoi vers Flask =====
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+
+    http.begin(serverName);
+    http.addHeader("Content-Type", "application/json");
+
+    // ⚠️ Conversion pluie en 0/1
+    int rainBinary = (rainValue < 2000) ? 1 : 0;
+
+    String jsonData = "{";
+    jsonData += "\"temperature\":" + String(temperature) + ",";
+    jsonData += "\"humidity\":" + String(humidity) + ",";
+    jsonData += "\"gas\":" + String(gasValue) + ",";
+    jsonData += "\"rain\":" + String(rainBinary);
+    jsonData += "}";
+
+    Serial.println("📡 Envoi JSON:");
+    Serial.println(jsonData);
+
+    int httpResponseCode = http.POST(jsonData);
+
+    Serial.print("📥 Réponse serveur: ");
+    Serial.println(httpResponseCode);
+
+    http.end();
+  }
+
+  delay(10000); // envoyer chaque 10 secondes
+}

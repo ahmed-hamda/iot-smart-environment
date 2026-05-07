@@ -2,27 +2,78 @@
 
 ## 🧠 Description
 
-Ce projet est un système intelligent de surveillance environnementale basé sur :
+Ce projet est un système intelligent de surveillance environnementale composé de :
 
-* IoT (ESP32 + capteurs)
-* Backend Flask (API + Machine Learning)
-* Base de données Supabase (PostgreSQL)
-* Dashboard Web (Angular)
-* Application Mobile (Flutter)
+* Un objet IoT (ESP32 + capteurs) pour la collecte de données
+* Un backend Flask pour l'API, le traitement et le machine learning
+* Une base de données Supabase pour stocker les mesures et les alertes
+* Une application mobile Flutter pour les interfaces utilisateurs
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture globale
 
 ```
-ESP32 (Sensors)
-↓
-Flask Backend (API + ML)
-↓
-Supabase (Database)
-↓
-Angular Dashboard + Flutter Mobile App
+ESP32 (capteurs IoT)
+    ↓
+Backend Flask (API, ML, alertes)
+    ↓
+Supabase (PostgreSQL)
+    ↓
+Application Flutter (UI mobile)
 ```
+
+---
+
+## 📸 Visuels du projet
+
+### Architecture globale
+
+<p align="center">
+  <img src="Captures/arch.png" width="750"/>
+</p>
+
+### Circuit et objets IoT
+
+<p align="center">
+  <img src="Captures/7.jpeg" width="350"/>
+</p>
+
+## Interfaces
+
+### Home
+
+<p align="center">
+  <img src="Captures/0.jpeg" width="250"/>
+</p>
+
+### History
+
+<p align="center">
+  <img src="Captures/1.jpeg" width="250"/>
+</p>
+
+### Alertes
+
+<p align="center">
+  <img src="Captures/2.jpeg" width="250"/>
+</p>
+
+### Predictions
+
+<p align="center">
+  <img src="Captures/3.jpeg" width="250"/>
+  <img src="Captures/4.jpeg" width="250"/>
+</p>
+
+### Notifications
+
+<p align="center">
+  <img src="Captures/5.jpeg" width="250"/>
+  <img src="Captures/6.jpeg" width="250"/>
+</p>
+
+> Toutes les images de l'architecture et du circuit IoT se trouvent dans le dossier `Captures`.
 
 ---
 
@@ -30,73 +81,91 @@ Angular Dashboard + Flutter Mobile App
 
 ```
 iot-project/
-│
-├── app.py
-├── config.py
-├── requirements.txt
-│
-├── models/
-├── routes/
-├── services/
-├── utils/
-│
-└── saved_models/
+├── backend/
+│   ├── app.py
+│   ├── config.py
+│   ├── requirements.txt
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── utils/
+│   └── saved_models/
+├── front_endd/
+│   ├── pubspec.yaml
+│   ├── lib/
+│   ├── android/
+│   ├── ios/
+│   └── web/
+├── Captures/
+│   ├── arch.png
+│   ├── 0.jpeg
+│   └── ...
+└── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation des dépendances
 
-### 1. Cloner le projet
+### Backend
 
-```
-git clone <repo-url>
-cd iot-project
-```
+1. Ouvrir un terminal dans `backend/`
+2. Créer et activer un environnement virtuel :
 
-### 2. Créer un environnement virtuel
-
-```
-python -m venv venv
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Activer l'environnement
+3. Installer les dépendances Python :
 
-#### Windows
-
-```
-venv\Scripts\activate
-```
-
-#### Linux / Mac
-
-```
-source venv/bin/activate
-```
-
-### 4. Installer les dépendances
-
-```
+```powershell
 pip install -r requirements.txt
 ```
 
+### Frontend Flutter
+
+1. Ouvrir un terminal dans `front_endd/`
+2. Installer les dépendances Flutter :
+
+```powershell
+flutter pub get
+```
+
 ---
 
-## 🚀 Lancer le projet
+## 🚀 Démarrage du projet
 
-```
+### Lancer le backend
+
+```powershell
+cd backend
 python app.py
 ```
 
-API disponible sur :
+Le backend sera disponible par défaut sur :
 
-```
+```text
 http://127.0.0.1:5000
+```
+
+### Lancer l'application Flutter
+
+```powershell
+cd front_endd
+flutter run
 ```
 
 ---
 
-## 📡 Endpoints API
+## 🖥️ Interfaces
+
+* Interface backend : API REST Flask pour la collecte des mesures, les prédictions et les alertes
+* Interface mobile : application Flutter affichant les mesures, les graphiques, les notifications et l'état du système
+
+---
+
+## 📡 Endpoints principaux
 
 * `GET /test`
 * `POST /measurements`
@@ -106,45 +175,24 @@ http://127.0.0.1:5000
 
 ---
 
-## 🤖 Machine Learning
+## 🔧 Notes
 
-* Modèle utilisé : Random Forest
-* Accuracy : ~99%
-* Sauvegarde : `.joblib` et `.pkl`
-
----
-
-## 📊 Fonctionnalités
-
-* Collecte des données (ESP32)
-* Intégration API météo
-* Prédiction de pluie
-* Détection d'anomalies
-* Alertes en temps réel
+* Le projet utilise `supabase` pour la base de données et `firebase-admin` pour les notifications
+* Si un fichier `.env` est requis, placez-le dans `backend/` avec les paramètres d'accès appropriés
 
 ---
 
-## 📌 Technologies utilisées
+## 👨‍💼 Auteurs
 
-* Flask
-* PostgreSQL (Supabase)
-* Scikit-learn
-* Angular
-* Flutter
-* ESP32
+- **Ahmed Hamda** 
+- **Yassine Dhuib** 
+- **Ayoub Barkia** 
+- Projet : **VisionTouch**
+- Date : 2026
 
----
 
-## 🎯 Objectif
-
-Créer un système intelligent combinant :
-
-```
-IoT + AI + Cloud + Web + Mobile
-```
 
 ---
 
-## 👨‍💻 Auteur
-
-Projet académique (PFE / IoT + ML)
+## 📄 Licence
+Projet académique de système IoT, backend Python et application mobile Flutter.
