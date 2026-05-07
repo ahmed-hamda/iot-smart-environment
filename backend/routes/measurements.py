@@ -1,11 +1,21 @@
 from flask import Blueprint, request, jsonify
+from services.notification_service import NotificationService
 from services.weather_service import get_weather_data
 from services.ml_service import predict_rain
 from services.alert_service import generate_alerts
 from utils.supabase_client import supabase
+from routes.notification import fcm_tokens  
 
 measurement_bp = Blueprint('measurement', __name__)
+notification_service = NotificationService()  # 🔹 ajoute
 
+# Map alert_type → emoji + titre
+ALERT_TITLES = {
+    "gas": "⚠️ Alerte Gaz !",
+    "temperature": "🌡️ Alerte Température !",
+    "rain_sensor": "🌧️ Pluie Détectée !",
+    "rain_prediction": "🤖 Prédiction Pluie !"
+}
 
 @measurement_bp.route('/measurements', methods=['POST'])
 def add_measurement():
@@ -18,7 +28,6 @@ def add_measurement():
         rain_sensor = data['rain']
 
         weather = get_weather_data()
-
         if weather is None:
             return jsonify({"error": "Weather API failed"}), 500
 
@@ -67,6 +76,17 @@ def add_measurement():
         if alerts:
             alert_response = supabase.table("alerts").insert(alerts).execute()
             saved_alerts = alert_response.data
+
+            # 🔹 5) Envoyer notification pour chaque alerte
+            if fcm_tokens:
+                for alert in saved_alerts:
+                    alert_type = alert.get("alert_type", "")
+                    title = ALERT_TITLES.get(alert_type, "🔔 Alerte IoT")
+                    body = alert.get("alert_message", "")
+
+                    for token in fcm_tokens:
+                        notification_service.send_notification(token, title, body)
+                        print(f"📱 Notification envoyée: {title} → {body}")
 
         return jsonify({
             "message": "Measurement + prediction + alerts saved successfully",

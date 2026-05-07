@@ -7,7 +7,7 @@ class NotificationProvider extends GetxService {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   // 🔹 Remplace XX par ton IP (ipconfig dans terminal Windows)
-  static const String baseUrl = "http://192.168.1.13:5000";
+  static const String baseUrl = "http://192.168.1.11:5000";
 
   Future<NotificationProvider> init() async {
     final settings = await _messaging.requestPermission(

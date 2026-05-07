@@ -40,3 +40,16 @@ def send_notification():
         results.append(result)
 
     return jsonify({"success": True, "results": results})
+
+def send_alert_notification_to_all(title, body):
+    results = []
+
+    if not fcm_tokens:
+        print("⚠️ Aucun token FCM enregistré")
+        return results
+
+    for token in fcm_tokens:
+        result = service.send_notification(token, title, body)
+        results.append(result)
+
+    return results
