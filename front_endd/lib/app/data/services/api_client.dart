@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class ApiClient {
 
-  final String baseUrl = "http://192.168.1.16:5000";
+  final String baseUrl = "http://192.168.1.13:5000";
 
   Future getData(String uri) async {
     final url = Uri.parse(baseUrl + uri);

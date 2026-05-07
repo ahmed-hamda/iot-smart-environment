@@ -23,9 +23,12 @@ class PredictionView extends GetView<PredictionController> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios,
-              color: Color(0xFF1A1A2E), size: 20),
-          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xFF1A1A2E),
+            size: 20,
+          ),
+          onPressed: () => Get.offAllNamed('/home'),
         ),
       ),
       body: Obx(() {
@@ -97,10 +100,7 @@ class _LastPredictionCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             controller.predictionDate.value,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF9E9E9E),
-            ),
+            style: const TextStyle(fontSize: 12, color: Color(0xFF9E9E9E)),
           ),
           const SizedBox(height: 20),
 
@@ -133,10 +133,7 @@ class _LastPredictionCard extends StatelessWidget {
                   ),
                   const Text(
                     'Probabilité de pluie',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF9E9E9E),
-                    ),
+                    style: TextStyle(fontSize: 12, color: Color(0xFF9E9E9E)),
                   ),
                 ],
               ),
@@ -151,8 +148,9 @@ class _LastPredictionCard extends StatelessWidget {
               value: controller.probabilityRain.value / 100,
               minHeight: 8,
               backgroundColor: const Color(0xFFE0E0E0),
-              valueColor:
-                  const AlwaysStoppedAnimation<Color>(Color(0xFF2979FF)),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF2979FF),
+              ),
             ),
           ),
 
@@ -266,9 +264,7 @@ class _HistoryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
-              color: isRain
-                  ? const Color(0xFFE3EEFF)
-                  : const Color(0xFFE8F5E9),
+              color: isRain ? const Color(0xFFE3EEFF) : const Color(0xFFE8F5E9),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -304,8 +300,9 @@ class _PercentLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment:
-          alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: alignEnd
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start,
       children: [
         Text(
           '$percent%',
@@ -317,10 +314,7 @@ class _PercentLabel extends StatelessWidget {
         ),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 11,
-            color: Color(0xFF9E9E9E),
-          ),
+          style: const TextStyle(fontSize: 11, color: Color(0xFF9E9E9E)),
         ),
       ],
     );
@@ -342,11 +336,7 @@ class _LargeRainIcon extends StatelessWidget {
           top: 10,
           child: _CloudShape(size: 50, color: const Color(0xFF90A4AE)),
         ),
-        Positioned(
-          left: 10,
-          top: 42,
-          child: _RainDrops(),
-        ),
+        Positioned(left: 10, top: 42, child: _RainDrops()),
       ],
     );
   }

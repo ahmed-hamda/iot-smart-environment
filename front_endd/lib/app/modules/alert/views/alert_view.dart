@@ -16,9 +16,12 @@ class AlertView extends GetView<AlertController> {
         backgroundColor: const Color(0xFFF4F6FA),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new,
-              color: Colors.black87, size: 18),
-          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black87,
+            size: 18,
+          ),
+          onPressed: () => Get.offAllNamed('/home'),
         ),
         title: const Text(
           'Alertes',
@@ -56,8 +59,10 @@ class AlertView extends GetView<AlertController> {
                 );
               }
               return ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 itemCount: alerts.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 10),
                 itemBuilder: (context, index) {
@@ -73,7 +78,7 @@ class AlertView extends GetView<AlertController> {
           ),
         ],
       ),
-      bottomNavigationBar: const AppButton(),
+      bottomNavigationBar: const AppButton(currentIndex: 2),
     );
   }
 }
@@ -89,29 +94,28 @@ class _AlertTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Obx(() => Row(
-            children: [
-              _TabItem(
-                label: 'Toutes',
-                isSelected:
-                    controller.selectedTab.value == AlertTab.toutes,
-                onTap: () => controller.selectTab(AlertTab.toutes),
-              ),
-              _TabItem(
-                label: 'Non lues',
-                isSelected:
-                    controller.selectedTab.value == AlertTab.nonLues,
-                onTap: () => controller.selectTab(AlertTab.nonLues),
-                badge: controller.unreadCount,
-              ),
-              _TabItem(
-                label: 'Lues',
-                isSelected:
-                    controller.selectedTab.value == AlertTab.lues,
-                onTap: () => controller.selectTab(AlertTab.lues),
-              ),
-            ],
-          )),
+      child: Obx(
+        () => Row(
+          children: [
+            _TabItem(
+              label: 'Toutes',
+              isSelected: controller.selectedTab.value == AlertTab.toutes,
+              onTap: () => controller.selectTab(AlertTab.toutes),
+            ),
+            _TabItem(
+              label: 'Non lues',
+              isSelected: controller.selectedTab.value == AlertTab.nonLues,
+              onTap: () => controller.selectTab(AlertTab.nonLues),
+              badge: controller.unreadCount,
+            ),
+            _TabItem(
+              label: 'Lues',
+              isSelected: controller.selectedTab.value == AlertTab.lues,
+              onTap: () => controller.selectTab(AlertTab.lues),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -158,7 +162,9 @@ class _TabItem extends StatelessWidget {
                     const SizedBox(width: 5),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 1),
+                        horizontal: 5,
+                        vertical: 1,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.redAccent,
                         borderRadius: BorderRadius.circular(10),
@@ -180,9 +186,7 @@ class _TabItem extends StatelessWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               height: 2.5,
-              color: isSelected
-                  ? const Color(0xFF2980B9)
-                  : Colors.transparent,
+              color: isSelected ? const Color(0xFF2980B9) : Colors.transparent,
             ),
           ],
         ),

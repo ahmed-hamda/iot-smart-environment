@@ -8,3 +8,5 @@ numpy
 pandas
 dotenv
 supabase
+firebase-admin
+python-dotenv

@@ -18,7 +18,7 @@ class HistoryView extends GetView<HistoryController> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Get.back(),
+          onPressed: () => Get.offAllNamed('/home'),
         ),
         title: const Text(
           "Historique",
@@ -101,10 +101,8 @@ class HistoryView extends GetView<HistoryController> {
           ),
           items: controller.periods
               .map(
-                (period) => DropdownMenuItem(
-                  value: period,
-                  child: Text(period),
-                ),
+                (period) =>
+                    DropdownMenuItem(value: period, child: Text(period)),
               )
               .toList(),
           onChanged: (value) {
@@ -214,10 +212,7 @@ class HistoryView extends GetView<HistoryController> {
                     color: lineColor,
                     barWidth: 3.5,
                     dotData: const FlDotData(show: false),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      color: fillColor,
-                    ),
+                    belowBarData: BarAreaData(show: true, color: fillColor),
                   ),
                 ],
               ),
