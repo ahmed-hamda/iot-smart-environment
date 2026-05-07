@@ -1,7 +1,7 @@
 # Python
 .venv/
 __pycache__/
-
+backend/serviceAccountKey.json
 # Flutter
 build/
 .dart_tool/

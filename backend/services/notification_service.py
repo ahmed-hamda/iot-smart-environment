@@ -8,7 +8,7 @@ class NotificationService:
         if not firebase_admin._apps:
             # Chemin absolu basé sur l'emplacement du fichier
             base_dir = os.path.dirname(os.path.abspath(__file__))
-            cred_path = os.path.join(base_dir, "..", "serviceAccountKey.json")
+            cred_path = os.path.join(base_dir, "..", "config", "serviceAccountKey.json")            
             cred = credentials.Certificate(cred_path)
             firebase_admin.initialize_app(cred)
 
