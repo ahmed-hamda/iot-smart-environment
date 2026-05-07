@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front_endd/app/data/notification_provider.dart';
 import 'package:front_endd/firebase_options.dart';
 import 'package:get/get.dart';
@@ -9,9 +9,13 @@ import 'app/routes/app_pages.dart'; // adapte le chemin
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // FULL SCREEN MODE
+  await SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.immersiveSticky,
+  );
 
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // ← manquait
+    options: DefaultFirebaseOptions.currentPlatform, 
   );
 
   await Get.putAsync(() => NotificationProvider().init());

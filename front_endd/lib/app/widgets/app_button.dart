@@ -11,8 +11,8 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea( // ✅ évite la barre système
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12), // 🔼 augmente un peu
-        margin: const EdgeInsets.only(bottom: 8), // 🔼 remonte la navbar
+        padding: const EdgeInsets.symmetric(vertical: 7), // 🔼 augmente un peu
+        margin: const EdgeInsets.only(bottom: 5), // 🔼 remonte la navbar
         decoration: BoxDecoration(
           color: AppColors.surface,
           boxShadow: [

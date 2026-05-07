@@ -4,7 +4,7 @@ from flask_cors import CORS
 from routes.measurements import measurement_bp
 from routes.predictions import prediction_bp
 from routes.alerts import alert_bp
-
+from routes.notification import notification_bp  
 app = Flask(__name__)
 CORS(app)
 
@@ -12,6 +12,7 @@ CORS(app)
 app.register_blueprint(measurement_bp)
 app.register_blueprint(prediction_bp)
 app.register_blueprint(alert_bp)
+app.register_blueprint(notification_bp)  
 
 # 🔹 Route test
 @app.route('/')

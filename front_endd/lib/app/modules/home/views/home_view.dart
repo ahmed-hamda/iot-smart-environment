@@ -4,8 +4,6 @@ import 'package:front_endd/app/widgets/app_button.dart';
 import 'package:front_endd/app/widgets/app_colors.dart';
 import 'package:get/get.dart';
 
-
-
 // ─── HomeView ─────────────────────────────────────────────────────────────────
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -37,7 +35,7 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      bottomNavigationBar: const AppButton(),
+      bottomNavigationBar: const AppButton(currentIndex: 0),
     );
   }
 
@@ -61,37 +59,44 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               const SizedBox(height: 2),
-              Obx(() => Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: controller.isOnline.value
-                              ? AppColors.accentGreen
-                              : AppColors.accentRed,
-                          shape: BoxShape.circle,
-                        ),
+              Obx(
+                () => Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: controller.isOnline.value
+                            ? AppColors.accentGreen
+                            : AppColors.accentRed,
+                        shape: BoxShape.circle,
                       ),
-                      const SizedBox(width: 5),
-                      Text(
-                        controller.isOnline.value ? 'En ligne' : 'Hors ligne',
-                        style: TextStyle(
-                          color: controller.isOnline.value
-                              ? AppColors.accentGreen
-                              : AppColors.accentRed,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1,
-                        ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      controller.isOnline.value ? 'En ligne' : 'Hors ligne',
+                      style: TextStyle(
+                        color: controller.isOnline.value
+                            ? AppColors.accentGreen
+                            : AppColors.accentRed,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           const Spacer(),
-          _IconBtn(icon: Icons.notifications_none_rounded, onTap: () {}),
+          _IconBtn(
+            icon: Icons.notifications_none_rounded,
+            onTap: () {
+              Get.offAllNamed('/alert');
+            },
+          ),
         ],
       ),
     );
@@ -107,25 +112,29 @@ class HomeView extends GetView<HomeController> {
         Row(
           children: [
             Expanded(
-              child: Obx(() => _SensorCard(
-                    icon: Icons.thermostat_rounded,
-                    iconColor: AppColors.accentRed,
-                    label: 'Température',
-                    value: '${controller.temperature.value}',
-                    unit: '°C',
-                    bgAccent: AppColors.accentRed.withOpacity(0.08),
-                  )),
+              child: Obx(
+                () => _SensorCard(
+                  icon: Icons.thermostat_rounded,
+                  iconColor: AppColors.accentRed,
+                  label: 'Température',
+                  value: '${controller.temperature.value}',
+                  unit: '°C',
+                  bgAccent: AppColors.accentRed.withOpacity(0.08),
+                ),
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Obx(() => _SensorCard(
-                    icon: Icons.water_drop_rounded,
-                    iconColor: AppColors.accent,
-                    label: 'Humidité',
-                    value: '${controller.humidity.value}',
-                    unit: '%',
-                    bgAccent: AppColors.accent.withOpacity(0.08),
-                  )),
+              child: Obx(
+                () => _SensorCard(
+                  icon: Icons.water_drop_rounded,
+                  iconColor: AppColors.accent,
+                  label: 'Humidité',
+                  value: '${controller.humidity.value}',
+                  unit: '%',
+                  bgAccent: AppColors.accent.withOpacity(0.08),
+                ),
+              ),
             ),
           ],
         ),
@@ -133,32 +142,37 @@ class HomeView extends GetView<HomeController> {
         Row(
           children: [
             Expanded(
-              child: Obx(() => _SensorCard(
-                    icon: Icons.air_rounded,
-                    iconColor: AppColors.accentGreen,
-                    label: 'Gaz',
-                    value: '${controller.gazPpm.value}',
-                    unit: ' ppm',
-                    bgAccent: AppColors.accentGreen.withOpacity(0.08),
-                  )),
+              child: Obx(
+                () => _SensorCard(
+                  icon: Icons.air_rounded,
+                  iconColor: AppColors.accentGreen,
+                  label: 'Gaz',
+                  value: '${controller.gazPpm.value}',
+                  unit: ' ppm',
+                  bgAccent: AppColors.accentGreen.withOpacity(0.08),
+                ),
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Obx(() => _SensorCard(
-                    icon: controller.isRaining.value
-                        ? Icons.water_rounded
-                        : Icons.wb_sunny_rounded,
-                    iconColor: controller.isRaining.value
-                        ? AppColors.accent
-                        : AppColors.accentAmber,
-                    label: 'Pluie',
-                    value: controller.rainLabel,
-                    unit: '',
-                    bgAccent: (controller.isRaining.value
-                            ? AppColors.accent
-                            : AppColors.accentAmber)
-                        .withOpacity(0.08),
-                  )),
+              child: Obx(
+                () => _SensorCard(
+                  icon: controller.isRaining.value
+                      ? Icons.water_rounded
+                      : Icons.wb_sunny_rounded,
+                  iconColor: controller.isRaining.value
+                      ? AppColors.accent
+                      : AppColors.accentAmber,
+                  label: 'Pluie',
+                  value: controller.rainLabel,
+                  unit: '',
+                  bgAccent:
+                      (controller.isRaining.value
+                              ? AppColors.accent
+                              : AppColors.accentAmber)
+                          .withOpacity(0.08),
+                ),
+              ),
             ),
           ],
         ),
@@ -176,12 +190,14 @@ class HomeView extends GetView<HomeController> {
             children: [
               const _SectionLabel('PRÉDICTION IA'),
               const Spacer(),
-              Obx(() => _PillBadge(
-                    label: controller.predictionLabel.value,
-                    color: controller.rainProbabilityRatio > 0.5
-                        ? AppColors.accent
-                        : AppColors.accentAmber,
-                  )),
+              Obx(
+                () => _PillBadge(
+                  label: controller.predictionLabel.value,
+                  color: controller.rainProbabilityRatio > 0.5
+                      ? AppColors.accent
+                      : AppColors.accentAmber,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -189,16 +205,18 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Big percentage
-              Obx(() => Text(
-                    controller.rainProbabilityFormatted,
-                    style: const TextStyle(
-                      fontSize: 56,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.textPrimary,
-                      height: 1,
-                      letterSpacing: -2,
-                    ),
-                  )),
+              Obx(
+                () => Text(
+                  controller.rainProbabilityFormatted,
+                  style: const TextStyle(
+                    fontSize: 56,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textPrimary,
+                    height: 1,
+                    letterSpacing: -2,
+                  ),
+                ),
+              ),
               const SizedBox(width: 12),
               Padding(
                 padding: const EdgeInsets.only(bottom: 6),
@@ -208,12 +226,16 @@ class HomeView extends GetView<HomeController> {
                     Text(
                       'Probabilité',
                       style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 12),
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
                     ),
                     Text(
                       'de pluie',
                       style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 12),
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -224,25 +246,29 @@ class HomeView extends GetView<HomeController> {
           ),
           const SizedBox(height: 20),
           // Progress bar
-          Obx(() => _RainProgressBar(
-                ratio: controller.rainProbabilityRatio,
-              )),
+          Obx(() => _RainProgressBar(ratio: controller.rainProbabilityRatio)),
           const SizedBox(height: 10),
-          Obx(() => Row(
-                children: [
-                  Text(
-                    'Beau temps ${controller.noRainProbabilityFormatted}',
-                    style: const TextStyle(
-                        color: AppColors.textTertiary, fontSize: 11),
+          Obx(
+            () => Row(
+              children: [
+                Text(
+                  'Beau temps ${controller.noRainProbabilityFormatted}',
+                  style: const TextStyle(
+                    color: AppColors.textTertiary,
+                    fontSize: 11,
                   ),
-                  const Spacer(),
-                  Text(
-                    'Pluie ${controller.rainProbabilityFormatted}',
-                    style: const TextStyle(
-                        color: AppColors.textTertiary, fontSize: 11),
+                ),
+                const Spacer(),
+                Text(
+                  'Pluie ${controller.rainProbabilityFormatted}',
+                  style: const TextStyle(
+                    color: AppColors.textTertiary,
+                    fontSize: 11,
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -261,8 +287,11 @@ class HomeView extends GetView<HomeController> {
               color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.update_rounded,
-                color: AppColors.textSecondary, size: 20),
+            child: const Icon(
+              Icons.update_rounded,
+              color: AppColors.textSecondary,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 14),
           Column(
@@ -278,14 +307,16 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               const SizedBox(height: 2),
-              Obx(() => Text(
-                    controller.lastUpdate.value,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )),
+              Obx(
+                () => Text(
+                  controller.lastUpdate.value,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
           ),
           const Spacer(),
@@ -298,10 +329,15 @@ class HomeView extends GetView<HomeController> {
                 color: AppColors.accent.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    color: AppColors.accent.withOpacity(0.25), width: 1),
+                  color: AppColors.accent.withOpacity(0.25),
+                  width: 1,
+                ),
               ),
-              child: const Icon(Icons.refresh_rounded,
-                  color: AppColors.accent, size: 20),
+              child: const Icon(
+                Icons.refresh_rounded,
+                color: AppColors.accent,
+                size: 20,
+              ),
             ),
           ),
         ],
@@ -435,34 +471,36 @@ class _RainProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (ctx, constraints) {
-      return Stack(
-        children: [
-          // Track
-          Container(
-            height: 8,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceElevated,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          // Fill
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 600),
-            curve: Curves.easeOutCubic,
-            height: 8,
-            width: constraints.maxWidth * ratio.clamp(0.0, 1.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              gradient: const LinearGradient(
-                colors: [Color(0xFF4F8EF7), Color(0xFF2255C4)],
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        return Stack(
+          children: [
+            // Track
+            Container(
+              height: 8,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.surfaceElevated,
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
-          ),
-        ],
-      );
-    });
+            // Fill
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 600),
+              curve: Curves.easeOutCubic,
+              height: 8,
+              width: constraints.maxWidth * ratio.clamp(0.0, 1.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF4F8EF7), Color(0xFF2255C4)],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -504,7 +542,7 @@ class _IconBtn extends StatelessWidget {
       child: Container(
         width: 40,
         height: 40,
-        
+
         child: Icon(icon, color: AppColors.textSecondary, size: 20),
       ),
     );
@@ -541,8 +579,11 @@ class _AnimatedRainIcon extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.cloud_rounded,
-                  size: 34, color: AppColors.textSecondary),
+              const Icon(
+                Icons.cloud_rounded,
+                size: 34,
+                color: AppColors.textSecondary,
+              ),
               const SizedBox(height: 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
