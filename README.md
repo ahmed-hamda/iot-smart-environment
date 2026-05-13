@@ -187,7 +187,7 @@ flutter run
 - **Ahmed Hamda** 
 - **Yassine Dhuib** 
 - **Ayoub Barkia** 
-- Projet : **VisionTouch**
+- Projet : **Smart Weather**
 - Date : 2026
 
 
